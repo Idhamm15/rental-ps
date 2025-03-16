@@ -225,79 +225,48 @@ class LandingPagesController extends Controller
         return redirect()->back()->with('error', 'Gagal memeriksa status pembayaran.');
     }
 
-    public function paid(Request $request)
+    private function updateTransactionStatus($orderId)
     {
-        dd($request->all());
-        
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'amount' => 'required|numeric|min:1',
+        $serverKey = config('midtrans.server_key');
+        $auth = base64_encode($serverKey . ':');
+        $url = "https://api.sandbox.midtrans.com/v2/$orderId/status";
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Basic ' . $auth,
+            'Content-Type: application/json',
         ]);
 
-        $programId = $request->query('id');
-        $program = Transaction::find($programId);
-    
-        if (!$program) {
-            return redirect('/')->with('error', 'Program tidak ditemukan!');
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $decoded = json_decode($response, true);
+
+        if (!isset($decoded['transaction_status'])) {
+            return false;
         }
-    
-        return view(
-            'pages.tenant.program.donasi',
-            get_defined_vars()
-        );
+
+        $transaction = Transaction::where('order_id', $orderId)->first();
+
+        if (!$transaction) {
+            return false;
+        }
+
+        $status = $decoded['transaction_status'];
+        $transaction->status = $status;
+        $transaction->payment_status = $status;
+
+        if (in_array($status, ['settlement', 'capture'])) {
+            $transaction->status = 'completed';
+            $transaction->payment_status = 'paid';
+            $transaction->settlement_time = $decoded['settlement_time'] ?? now();
+        }
+
+        $transaction->save();
+
+        return $transaction;
     }
-
-    public function success_payment()
-    {
-        return view(
-            'pages.tenant.program.success_payment',
-            get_defined_vars()
-        );
-    }
-
-    private function updateTransactionStatus($orderId)
-{
-    $serverKey = config('midtrans.server_key');
-    $auth = base64_encode($serverKey . ':');
-    $url = "https://api.sandbox.midtrans.com/v2/$orderId/status";
-
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Basic ' . $auth,
-        'Content-Type: application/json',
-    ]);
-
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    $decoded = json_decode($response, true);
-
-    if (!isset($decoded['transaction_status'])) {
-        return false;
-    }
-
-    $transaction = Transaction::where('order_id', $orderId)->first();
-
-    if (!$transaction) {
-        return false;
-    }
-
-    $status = $decoded['transaction_status'];
-    $transaction->status = $status;
-    $transaction->payment_status = $status;
-
-    if (in_array($status, ['settlement', 'capture'])) {
-        $transaction->status = 'completed';
-        $transaction->payment_status = 'paid';
-        $transaction->settlement_time = $decoded['settlement_time'] ?? now();
-    }
-
-    $transaction->save();
-
-    return $transaction;
-}
 
 
     // public function callback(Request $request)
@@ -351,9 +320,6 @@ class LandingPagesController extends Controller
 
     //     return response()->json(['message' => 'Callback received successfully']);
     // }
-
-
-
 
 
     public function callback(Request $request)
