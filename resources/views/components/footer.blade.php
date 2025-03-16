@@ -3,14 +3,14 @@
       
       <div class="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
         <a href="/" class="flex items-center justify-center font-medium text-blue-900 title-font md:justify-start">
-          <img src="/images/logo_hanna.png" alt="Logo" class="w-32 h-auto">
+          <img src="/images/images/logo-no-bg.png" alt="Logo" class="w-32 h-auto">
         </a>
         <p class="mt-4 text-[16px] text-white">
           Solusi cairan pembersih.
         </p>
         <p class="mt-5 text-sm text-blue-500">
-          <a href="https://www.hannachemindo.com" target="_blank" class="text-blue-500 underline hover:text-blue-800">
-            www.hannachemindo.com
+          <a href="https://www.rentalps.com" target="_blank" class="text-blue-500 underline hover:text-blue-800">
+            www.rentalps.com
           </a>
         </p>
 
@@ -81,8 +81,8 @@
           </li>          
           <li class="flex items-center mb-4">
             <img src="/images/icon_mail.svg" alt="Email" class="w-6 h-6 mr-3 text-white">
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=admin@hannachemindo.com" target="_blank" class="text-white hover:text-blue-800">
-              admin@hannachemindo.com
+            <a href="#" target="_blank" class="text-white hover:text-blue-800">
+              admin@rentalps.com
             </a>
           </li>
           <li class="flex items-start">
@@ -102,7 +102,7 @@
     <div class="flex flex-wrap items-center justify-center w-full py-6 text-blue-600 bg-[#4CC9FE] px-9">
         <div class="w-full mb-4 text-center md:w-auto md:text-center md:mb-0">
             <p class="justify-center text-sm text-center text-white jud">
-                Copyright © 2025 - Hannachemindo All rights reserved.
+                Copyright © 2025 - rentalps All rights reserved.
             </p>
         </div>
     </div>    

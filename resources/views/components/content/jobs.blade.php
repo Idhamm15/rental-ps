@@ -7,7 +7,7 @@
         @if ($title)
             <h2 class="mb-2 text-2xl font-bold text-center text-gray-800">{{ $title }}</h2>
             <p class="mb-8 text-center text-gray-500">
-                Temukan layanan dan produk hannachemindo terbaik untuk Anda
+                Temukan layanan dan produk rentalps terbaik untuk Anda
             </p>
         @endif
 

@@ -3,7 +3,7 @@
 
 <div class="py-6 text-center">
     <h1 class="text-2xl font-bold">Produk</h1>
-    <p class="text-gray-500">Temukan layanan dan produk hannachemindo terbaik untuk Anda</p>
+    <p class="text-gray-500">Temukan layanan dan produk rentalps terbaik untuk Anda</p>
 </div>
 
 <!-- Navbar -->

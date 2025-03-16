@@ -8,7 +8,7 @@
         <div class="flex justify-center flex-1 max-w-screen-xl m-0 bg-white shadow sm:m-10 sm:rounded-lg">
             <div class="p-6 lg:w-1/2 xl:w-5/12 sm:p-12">
                 <div>
-                    <img src="/images/logo_hanna.png"
+                    <img src="/images/images/logo-no-bg.png"
                         class="mx-auto w-36" />
                 </div>
                 <div class="flex flex-col items-center mt-12">
